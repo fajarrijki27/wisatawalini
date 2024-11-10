@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Air Panas Walini</title>
+    <link rel="stylesheet" href="assets/css/style-login.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Air Panas Walini</h2>
+
+        <form method="POST" action="handler.php">
+            
+            <label for="username" id="username" class="label">Username</label>
+            <input type="text" id="username" name="username" value="" placeholder="Masukan username" autocomplete="off">
+            
+            <label for="password" class="label">Password</label>
+            <input type="password" id="password" name="password" value="" placeholder="Masukan password" autocomplete="off">
+
+            <div class="remember-me">
+                <input type="checkbox" id="remember" name="remember" checked>
+                <label for="remember">Remember me</label>
+            </div>
+            
+            <button type="submit">Masuk</button>
+        </form>
+    </div>
+    <script src="assets/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+body::-webkit-scrollbar {
+    width: 0; /* Menyembunyikan scrollbar */
+    background: transparent; /* Membuat latar belakang transparan */
+}
+
+header h1 p {
+    font-size: 20px;
+    display: inline-grid;
+    padding-right: 20px;
+}
+header h1 {
+    padding-right: 20px;
+    font-size: 30px;
+}
+header h1 em {
+    font-style: italic;
+    font-weight: normal;
+}
+
+/* Style untuk tombol hamburger agar lebih terlihat */
+.navbar-toggler {
+    background-color: transparent; /* Menghilangkan latar belakang */
+    border: none;
+    color: white; /* Warna ikon hamburger */
+    padding: 0.5rem;
+}
+
+/* Ubah ikon hamburger menjadi putih */
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* Menghapus efek hover */
+.navbar-toggler:hover {
+    background-color: transparent;
+}
+
+#main-container {
+    display: flex;
+    flex: 1;
+    min-height: calc(100vh - 56px); /* Mengurangi tinggi header untuk mencakup seluruh layar */
+    transition: margin-left 0.3s ease;
+}
+
+#sidebar {
+    width: 250px;
+    transition: width 0.3s, transform 0.3s;
+}
+
+#sidebar.active {
+    width: 0;
+    transform: translateX(-100%);
+}
+
+#content {
+    transition: width 0.3s;
+    width: calc(100% - 250px);
+}
+
+#sidebar.active + #content {
+    width: 100%;
+}
+
+.content {
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    #sidebar {
+        position: absolute;
+        top: 56px; /* Sesuaikan dengan tinggi header */
+        height: calc(100vh - 56px);
+        z-index: 1000;
+    }
+
+    #sidebar.active {
+        width: 0;
+        transform: translateX(-100%);
+    }
+
+    #sidebar.active + #content {
+        width: 100%;
+    }
+}
