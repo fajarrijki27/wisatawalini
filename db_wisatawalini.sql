@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 11, 2024 at 10:41 AM
+-- Generation Time: Nov 17, 2024 at 07:44 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,20 +29,23 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `username` varchar(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `kategori_user` enum('cashier','manager','administrator','officer','monitoring') NOT NULL,
   `password` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `role` enum('manager','cashier') NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `email`, `role`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin123', 'admin@example.com', 'cashier', '2024-11-10 06:06:26', '2024-11-10 06:06:45');
+INSERT INTO `users` (`id`, `name`, `username`, `email`, `kategori_user`, `password`, `created_at`) VALUES
+(1, 'Fajar Rizqi', 'fajardoang', 'fajar.rizqi961@smk.belajar.id', 'manager', '$2y$10$p52mjGhUS7QJzhV.n8hoAOhfK4xyMhYxuGyCTJsTEbRXtI13rnXYa', '2024-11-16 15:09:16'),
+(2, 'Fajar Rizqi', 'FajarRizqi', 'fajarberto2007@gmail.com', 'manager', '$2y$10$YAyqkSpHV1QhCjth0NuaOux9c2u1.w5a5bExWmKbIRE0vhtJE69aa', '2024-11-16 15:13:39'),
+(3, 'fajarrr', 'fajarzzz', 'fajar@gmail.com', 'cashier', '$2y$10$f246CkJh0af/HPyJJjyfTOMTv7Ui39Y4PsP9WJcMNkyeNz3mzTgzK', '2024-11-16 15:46:51'),
+(4, 'jajang', 'jajang', 'jajang2@gmail.com', 'manager', '$2y$10$n15V34cgMEO3XobbBL7HUu4OYrs96NW68eEqyJlag8Pq6cVGmt7z6', '2024-11-17 06:10:49');
 
 --
 -- Indexes for dumped tables
@@ -53,6 +56,7 @@ INSERT INTO `users` (`id`, `username`, `password`, `email`, `role`, `created_at`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
@@ -63,7 +67,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
