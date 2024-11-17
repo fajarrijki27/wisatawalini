@@ -1,14 +1,15 @@
 <?php
-$servername = "localhost";
-$username = "root";  // ganti sesuai username database
-$password = "";      // ganti sesuai password database
-$dbname = "db_wisatawalini";
+// Konfigurasi koneksi ke database
+$host = "localhost";
+$user = "root"; // Ubah jika menggunakan user database lain
+$password = ""; // Ubah jika menggunakan password database
+$db_name = "db_wisatawalini";
 
-// Buat koneksi ke database
-$conn = new mysqli($servername, $username, $password, $dbname);
+// Membuat koneksi ke database
+$conn = new mysqli($host, $user, $password, $db_name);
 
 // Cek koneksi
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die("Koneksi ke database gagal: " . $conn->connect_error);
 }
 ?>

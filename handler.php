@@ -1,39 +1,49 @@
 <?php
-session_start();
+// Sertakan file koneksi database
 require 'includes/db_connect.php';
 
-// Pastikan hanya menerima request POST
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Ambil data dari form dan sanitasi
-    $user = htmlspecialchars(trim($_POST['username']), ENT_QUOTES, 'UTF-8');
-    $pass = htmlspecialchars(trim($_POST['password']), ENT_QUOTES, 'UTF-8');
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // Ambil data dari form
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-    // Gunakan prepared statements untuk mencegah SQL Injection
-    $sql = "SELECT id, username FROM users WHERE username = ? AND password = ?";
+    // Validasi input
+    if (empty($username) || empty($password)) {
+        echo "<script>alert('Username dan password tidak boleh kosong!'); window.history.back();</script>";
+        exit;
+    }
+
+    // Query untuk memeriksa username
+    $sql = "SELECT * FROM users WHERE username = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $user, $pass); // "ss" artinya kedua parameter adalah string
-
-    // Eksekusi query
+    $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        // Jika login berhasil, ambil user_id dari hasil query
-        $row = $result->fetch_assoc();
-        $_SESSION['user_id'] = $row['id']; // Simpan user_id ke dalam session
-        header("Location: admin/dashboard.php");
-        exit();
+        // Ambil data user
+        $user = $result->fetch_assoc();
+
+        // Verifikasi password
+        if (password_verify($password, $user['password'])) {
+            // Jika password benar
+            session_start();
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['username'] = $user['username'];
+
+            header("Location: admin/index.html");
+            exit;
+        } else {
+            // Jika password salah
+            echo "<script>alert('Password salah!'); window.location.href='login.html';</script>";
+        }
     } else {
-        // Jika login gagal, tampilkan pesan error dengan aman
-        echo "Username atau Password salah!";
+        // Jika username tidak ditemukan
+        echo "<script>alert('Username tidak ditemukan!'); window.location.href='login.html';</script>";
     }
 
-    // Tutup statement dan koneksi
     $stmt->close();
-    $conn->close();
-} else {
-    // Jika bukan POST, kembalikan ke halaman login
-    header("Location: login.html");
-    exit();
 }
+
+$conn->close();
 ?>
