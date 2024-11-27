@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 17, 2024 at 07:44 AM
+-- Generation Time: Nov 27, 2024 at 09:41 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,107 @@ SET time_zone = "+00:00";
 --
 -- Database: `db_wisatawalini`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `discounts`
+--
+
+CREATE TABLE `discounts` (
+  `id_discount` int(11) NOT NULL,
+  `id_product` int(11) NOT NULL,
+  `discount_value` decimal(10,2) NOT NULL,
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `id_user` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `discounts`
+--
+
+INSERT INTO `discounts` (`id_discount`, `id_product`, `discount_value`, `created_at`, `updated_at`, `id_user`) VALUES
+(38, 27, 10.00, '2024-11-26 20:18:43', '2024-11-26 13:18:43', 1),
+(39, 32, 10.00, '2024-11-26 20:27:44', '2024-11-26 13:27:44', 1),
+(44, 30, 10.00, '2024-11-27 00:09:07', '2024-11-26 17:09:07', 1),
+(45, 33, 10.00, '2024-11-27 00:09:07', '2024-11-26 17:09:07', 1),
+(46, 2, 10.00, '2024-11-27 09:29:48', '2024-11-27 02:29:48', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `products`
+--
+
+CREATE TABLE `products` (
+  `id_product` int(11) NOT NULL,
+  `nama_product` varchar(100) NOT NULL,
+  `kategori_product` enum('Kolam Renang','Kendaraan','PlayGround','Penginapan','Kelengkapan') NOT NULL,
+  `sub_kategori_product` enum('Penginapan Bungalow','Penginapan Kerucut','Penginapan Lumbung','Penginapan Panggung') DEFAULT NULL,
+  `harga_weekday` decimal(10,2) NOT NULL,
+  `harga_weekend` decimal(10,2) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_by` int(11) DEFAULT NULL,
+  `img` varchar(255) NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id_product`, `nama_product`, `kategori_product`, `sub_kategori_product`, `harga_weekday`, `harga_weekend`, `created_at`, `updated_by`, `img`, `updated_at`) VALUES
+(2, 'Kolam Renang', 'Kolam Renang', NULL, 20000.00, 25000.00, '2024-11-23 11:15:46', 1, 'product_6745d8e48f2ff1.06886965.jpg', '2024-11-26 14:19:16'),
+(3, 'Kolam Rendam', 'Kolam Renang', NULL, 20000.00, 20000.00, '2024-11-23 11:21:29', 1, 'product_6741824f9003e0.02778070.jpg', '2024-11-23 07:20:47'),
+(4, 'Kolam Rendam Keluarga', 'Kolam Renang', NULL, 20000.00, 20000.00, '2024-11-23 11:30:07', 1, 'product_67418265b10c13.39284895.jpg', '2024-11-23 07:21:09'),
+(5, 'Kolam Terapi Ikan', 'Kolam Renang', NULL, 20000.00, 20000.00, '2024-11-23 11:36:39', 1, 'product_674182805d0043.97255425.jpg', '2024-11-23 07:21:36'),
+(8, 'Kendaraan Roda 4', 'Kendaraan', NULL, 100000.00, 100000.00, '2024-11-23 14:40:02', 1, 'product_674189287bce01.00775717.jpg', '2024-11-23 07:50:00'),
+(9, 'Kendaraan Roda 6 (bis)', 'Kendaraan', NULL, 100000.00, 100000.00, '2024-11-23 14:50:53', 1, 'product_6741895dc27420.69542889.jpg', '2024-11-23 07:50:53'),
+(11, 'Kendaraan Roda 2', 'Kendaraan', NULL, 100000.00, 100000.00, '2024-11-23 14:53:29', 1, 'product_674189f9e4d109.74292126.jpg', '2024-11-23 07:53:29'),
+(12, 'ATV Adventure', 'PlayGround', NULL, 100000.00, 100000.00, '2024-11-23 15:01:37', 1, 'product_67418be1b30c70.24608268.jpg', '2024-11-23 08:02:22'),
+(13, 'ATV Tea Tour', 'PlayGround', NULL, 100000.00, 100000.00, '2024-11-23 15:03:22', 1, 'product_67418c4a9e4843.31335712.jpg', '2024-11-23 08:03:22'),
+(14, 'ATV Mini', 'PlayGround', NULL, 100000.00, 100000.00, '2024-11-23 15:03:50', 1, 'product_67418c66c07ca9.54021615.jpg', '2024-11-23 08:03:50'),
+(15, 'F Fox Besar (Extrem)', 'PlayGround', NULL, 100000.00, 100000.00, '2024-11-23 15:04:38', 1, 'product_67418c96bf99b9.86901243.jpg', '2024-11-23 08:04:38'),
+(16, 'F Fox Mini', 'PlayGround', NULL, 100000.00, 100000.00, '2024-11-23 15:04:59', 1, 'product_67418cab868ec0.87117961.jpg', '2024-11-23 08:04:59'),
+(17, 'Go Car', 'PlayGround', NULL, 100000.00, 100000.00, '2024-11-23 15:05:20', 1, 'product_67418cc0791f08.72824869.jpg', '2024-11-23 08:05:20'),
+(18, 'Kereta Api', 'PlayGround', NULL, 100000.00, 100000.00, '2024-11-23 15:05:45', 1, 'product_67418cd9ae9ac8.07742627.jpg', '2024-11-23 08:05:45'),
+(20, 'Bajaj', 'PlayGround', NULL, 100000.00, 100000.00, '2024-11-23 15:06:23', 1, 'product_67418cffdcc6b3.01433560.jpg', '2024-11-23 08:06:23'),
+(21, 'Loker', 'Kelengkapan', NULL, 20000.00, 20000.00, '2024-11-23 17:04:00', 1, 'product_6741a8901d8bc8.21382008.jpg', '2024-11-23 10:04:00'),
+(22, 'Toilet', 'Kelengkapan', NULL, 20000.00, 20000.00, '2024-11-23 17:04:34', 1, 'product_6741a8b2052b71.43156169.jpg', '2024-11-23 10:04:34'),
+(23, 'Tikar', 'Kelengkapan', NULL, 20000.00, 20000.00, '2024-11-23 17:04:53', 1, 'product_6741a8c55821b3.09590146.jpg', '2024-11-23 10:04:53'),
+(24, 'Ban', 'Kelengkapan', NULL, 20000.00, 20000.00, '2024-11-23 17:05:14', 1, 'product_6741a8daac2095.04911333.jpg', '2024-11-23 10:05:14'),
+(25, 'Kelengkapan Renang', 'Kelengkapan', NULL, 20000.00, 20000.00, '2024-11-23 17:05:42', 1, 'product_6741a8f692f2a2.46209094.jpg', '2024-11-23 10:05:42'),
+(27, 'Penginapan Bungalow 1', 'Penginapan', 'Penginapan Bungalow', 100000.00, 100000.00, '2024-11-24 11:14:27', 1, 'product_6742c044552e95.16492865.jpg', '2024-11-24 05:57:24'),
+(29, 'Penginapan Bungalow 2', 'Penginapan', 'Penginapan Bungalow', 20000.00, 20000.00, '2024-11-24 12:57:59', 1, 'product_6742c06741dc62.81840697.jpg', '2024-11-24 05:57:59'),
+(30, 'Penginapan Bungalow 3', 'Penginapan', 'Penginapan Bungalow', 20000.00, 20000.00, '2024-11-24 12:58:16', 1, 'product_6742c0788c8dc7.43936369.jpg', '2024-11-24 05:58:16'),
+(31, 'Penginapan Kerucut 1', 'Penginapan', 'Penginapan Kerucut', 100000.00, 100000.00, '2024-11-24 12:58:59', 1, 'product_6742c0b70afd38.22395720.jpg', '2024-11-24 05:59:19'),
+(32, 'Penginapan Kerucut 2', 'Penginapan', 'Penginapan Kerucut', 20000.00, 20000.00, '2024-11-24 12:59:36', 1, 'product_6742c0c80d7544.97616039.jpg', '2024-11-24 05:59:36'),
+(33, 'Penginapan Kerucut 3', 'Penginapan', 'Penginapan Kerucut', 20000.00, 20000.00, '2024-11-24 12:59:50', 1, 'product_6742c0d6bfe617.34722787.jpg', '2024-11-24 05:59:50'),
+(34, 'Penginapan Lumbung 1', 'Penginapan', 'Penginapan Lumbung', 20000.00, 20000.00, '2024-11-24 13:00:17', 1, 'product_6742c0f1acccc4.84412809.jpg', '2024-11-24 06:00:17'),
+(35, 'Penginapan Lumbung 2', 'Penginapan', 'Penginapan Lumbung', 20000.00, 20000.00, '2024-11-24 13:00:35', 1, 'product_6742c103d7a193.39621406.jpg', '2024-11-24 06:00:35'),
+(36, 'Penginapan Lumbung 3', 'Penginapan', 'Penginapan Lumbung', 20000.00, 20000.00, '2024-11-24 13:00:52', 1, 'product_6742c1146baea2.88843989.jpg', '2024-11-24 06:00:52'),
+(37, 'Penginapan panggung 1', 'Penginapan', 'Penginapan Panggung', 20000.00, 20000.00, '2024-11-24 13:01:34', 1, 'product_6742c13e114707.25887299.jpg', '2024-11-24 06:01:34'),
+(38, 'Penginapan panggung 2', 'Penginapan', 'Penginapan Panggung', 20000.00, 20000.00, '2024-11-24 13:01:49', 1, 'product_6742c14d43fb86.23565583.jpg', '2024-11-24 06:01:49'),
+(39, 'Penginapan panggung 3', 'Penginapan', 'Penginapan Panggung', 100000.00, 100000.00, '2024-11-24 13:02:02', 1, 'product_6742c1756bdab9.57959587.jpg', '2024-11-24 06:02:29');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transactions`
+--
+
+CREATE TABLE `transactions` (
+  `id_transaksi` int(11) NOT NULL,
+  `id_product` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `tanggal_transaksi` datetime DEFAULT current_timestamp(),
+  `id_discount` int(11) DEFAULT NULL,
+  `total_beli` int(11) DEFAULT 0,
+  `total_harga` decimal(10,2) DEFAULT 0.00,
+  `total_harga_tambah_diskon` decimal(10,2) DEFAULT 0.00,
+  `diskon` decimal(10,2) DEFAULT 0.00
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -42,14 +143,53 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `email`, `kategori_user`, `password`, `created_at`) VALUES
-(1, 'Fajar Rizqi', 'fajardoang', 'fajar.rizqi961@smk.belajar.id', 'manager', '$2y$10$p52mjGhUS7QJzhV.n8hoAOhfK4xyMhYxuGyCTJsTEbRXtI13rnXYa', '2024-11-16 15:09:16'),
-(2, 'Fajar Rizqi', 'FajarRizqi', 'fajarberto2007@gmail.com', 'manager', '$2y$10$YAyqkSpHV1QhCjth0NuaOux9c2u1.w5a5bExWmKbIRE0vhtJE69aa', '2024-11-16 15:13:39'),
-(3, 'fajarrr', 'fajarzzz', 'fajar@gmail.com', 'cashier', '$2y$10$f246CkJh0af/HPyJJjyfTOMTv7Ui39Y4PsP9WJcMNkyeNz3mzTgzK', '2024-11-16 15:46:51'),
-(4, 'jajang', 'jajang', 'jajang2@gmail.com', 'manager', '$2y$10$n15V34cgMEO3XobbBL7HUu4OYrs96NW68eEqyJlag8Pq6cVGmt7z6', '2024-11-17 06:10:49');
+(1, 'Ayi Lesmana', 'Ayilesmana', 'ayilesmana1@gmail.com', 'monitoring', '$2y$10$l0icScsO50OKlGbGxXiXC.VBU4BxgkQdjT4pcFK0lH.wa.OWvEedS', '2024-11-16 15:09:16'),
+(2, 'Uus suryana', 'UusSuryana', 'uussuryana1@gmail.com', 'cashier', '$2y$10$on9ge22l0GUXVlvWYhYjGe3G7AmwGOZdiVlQ0KiCvnITSygAQsdjy', '2024-11-16 15:13:39'),
+(3, 'Nandang Suryana', 'NandangSuryana', 'NandangSuryana1@gmail.com', 'monitoring', '$2y$10$lh83xUIJlIG.prZuFskioOwI6oXI9AA15NYueAdn7G9T4mx0l95wq', '2024-11-16 15:46:51'),
+(4, 'Uus suryana', 'Uus suryana', 'uussuryana@gmail.com', 'manager', '$2y$10$yaHTPLs.JR3ZGtwVdY4Ak.5ZLVKlieizKygyq5.DRqfFBkZOTJ5HS', '2024-11-17 06:10:49'),
+(5, 'Admin', 'Admin Walini', 'Walini@gmail.com', 'administrator', '$2y$10$wLFD/QBoyPqeucp9jmgXt.MiZmLDk0xyr8DJBa6/yElR1lAcfbPXm', '2024-11-17 07:47:03'),
+(7, 'Nandang Suryana', 'Nandang Suryana', 'Nandangsuryana@gmail.com', 'cashier', '$2y$10$c0QUzvyWfotIdkOEVBODveh33Ge7P3vD3bRbhsBuLaByDTUex81B6', '2024-11-22 12:52:21'),
+(8, 'Ayi Lesmana', 'ayi lesmana', 'Ayilesmana@gmail.com', 'cashier', '$2y$10$evJnnfDLcF6d9OrQ8cizHe8IYwjz5NlaeEWNkKjHQfBuxWgyAOKAG', '2024-11-22 15:20:22'),
+(9, 'Acajumhaya', 'Aca Jumhaya', 'acajumhaya1@gmail.com', 'monitoring', '$2y$10$dfzXinMnmkADIiHy9H9/i.2SBvYvJUsaaoiLS6zrhbEtEUkaRLpPu', '2024-11-22 16:16:48'),
+(10, 'Adminwalini', 'Walini', 'walinioffice@gmail.com', 'manager', '$2y$10$SNUwClrcW.pbZTouPfiwruMBdB58d1KjePcrBi.e4Y4RUFLR9dCqa', '2024-11-22 16:17:32'),
+(11, 'Aca Jumhaya', 'Acajumhaya', 'acajumhaya@gmail.com', 'cashier', '$2y$10$JxCt/t3q5KKEnYX2sOC8Iux9wq04Xn45AfZtxI6I10ti/9TLkLMxq', '2024-11-22 16:33:17'),
+(12, 'Dede Komara', 'Dede komara', 'dedekomara616@gmail.com', 'monitoring', '$2y$10$kA7h1rCxjzudRTuKtDDoXOXogc1zz6daBkQfMM7k0Y93Gw4aMaLcO', '2024-11-22 16:34:15'),
+(13, 'Elang kusumah', 'Elang kusumah', 'elangkusumah@gmail.com', 'manager', '$2y$10$WpfqpZstZWRheFlk2.mXOOGNvwSbhTSRsOyozz/swJ6QkxEcb6G7W', '2024-11-22 16:35:00'),
+(14, 'Lia Kusliah', 'Lia Kusliah S.H', 'liakusliahSH@gmail.com', 'manager', '$2y$10$QkzoptTzKEIA8rcdjCUJNeBUPg4QslswQ0ZjLa/bgyzxCCHxgtAjK', '2024-11-22 16:35:38'),
+(15, 'Diky', 'Diky', 'dikyiky12@gmail.com', 'manager', '$2y$10$RSx9Np6oUAZDv2ruMJaLmuC8oaN/AE6OgfrXNPlXPew5T7WXgiavm', '2024-11-22 16:36:10'),
+(16, 'setiawan', 'setiawan', 'merouter@gmail.com', 'cashier', '$2y$10$Z6LG.WoIhAiPBbQ7guipjeyvRM1c3hUIc6ATxZsT99cInMGdwRSG2', '2024-11-22 16:36:45'),
+(17, 'Budi Sadjawidjaya', 'Budi Sadjawidjaya', 'budisadjawidjaya@gmail.com', 'manager', '$2y$10$/39IWM3ya0J0/HMEUM3TqemmhZOQYyFh.BIloCLBilCH3.CF3Fcau', '2024-11-22 16:37:23');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `discounts`
+--
+ALTER TABLE `discounts`
+  ADD PRIMARY KEY (`id_discount`),
+  ADD KEY `id_product` (`id_product`),
+  ADD KEY `id_discount` (`id_discount`),
+  ADD KEY `id_user` (`id_user`);
+
+--
+-- Indexes for table `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`id_product`),
+  ADD KEY `updated_by` (`updated_by`),
+  ADD KEY `id_product` (`id_product`),
+  ADD KEY `id_product_2` (`id_product`);
+
+--
+-- Indexes for table `transactions`
+--
+ALTER TABLE `transactions`
+  ADD PRIMARY KEY (`id_transaksi`),
+  ADD KEY `id_product` (`id_product`),
+  ADD KEY `id_user` (`id_user`),
+  ADD KEY `id_discount` (`id_discount`);
 
 --
 -- Indexes for table `users`
@@ -57,17 +197,51 @@ INSERT INTO `users` (`id`, `name`, `username`, `email`, `kategori_user`, `passwo
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `username` (`username`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD UNIQUE KEY `email` (`email`),
+  ADD KEY `id` (`id`),
+  ADD KEY `id_2` (`id`),
+  ADD KEY `id_3` (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT for table `discounts`
 --
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `discounts`
+  MODIFY `id_discount` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+
+--
+-- AUTO_INCREMENT for table `transactions`
+--
+ALTER TABLE `transactions`
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `discounts`
+--
+ALTER TABLE `discounts`
+  ADD CONSTRAINT `discounts_ibfk_1` FOREIGN KEY (`id_product`) REFERENCES `products` (`id_product`) ON DELETE CASCADE,
+  ADD CONSTRAINT `id_user` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `products`
+--
+ALTER TABLE `products`
+  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `transactions`
+--
+ALTER TABLE `transactions`
+  ADD CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`id_product`) REFERENCES `products` (`id_product`),
+  ADD CONSTRAINT `transactions_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `transactions_ibfk_3` FOREIGN KEY (`id_discount`) REFERENCES `discounts` (`id_discount`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

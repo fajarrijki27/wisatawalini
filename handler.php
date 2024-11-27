@@ -1,11 +1,11 @@
 <?php
-// Sertakan file koneksi database
+session_start(); // Panggil di awal
 require 'includes/db_connect.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Ambil data dari form
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $username = trim($_POST['username']);
+    $password = trim($_POST['password']);
 
     // Validasi input
     if (empty($username) || empty($password)) {
@@ -16,6 +16,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Query untuk memeriksa username
     $sql = "SELECT * FROM users WHERE username = ?";
     $stmt = $conn->prepare($sql);
+
+    if (!$stmt) {
+        echo "<script>alert('Terjadi kesalahan pada server!'); window.history.back();</script>";
+        exit;
+    }
+
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -27,11 +33,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Verifikasi password
         if (password_verify($password, $user['password'])) {
             // Jika password benar
-            session_start();
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
 
-            header("Location: admin/index.html");
+            header("Location: admin/index.php");
             exit;
         } else {
             // Jika password salah
