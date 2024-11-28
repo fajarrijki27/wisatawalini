@@ -3,8 +3,8 @@ session_start();
 // Sertakan file koneksi database dari folder includes
 require '../../../includes/db_connect.php';
 
-// Query untuk mengambil data produk yang kategorinya adalah 
-$sql = "SELECT * FROM products WHERE kategori_product = 'Kelengkapan'";
+// Query untuk mengambil data produk yang kategorinya adalah 'Kolam Renang'
+$sql = "SELECT * FROM products WHERE kategori_product = 'Fasilitas'";
 $result = $conn->query($sql);
 ?>
 
@@ -71,7 +71,7 @@ $result = $conn->query($sql);
                             <!-- transaksi kolam -->
                             <ul class="nav nav-treeview" role="group">
                                 <li class="nav-item"> 
-                                    <a href="../../transaksi/kolam/kolam-renang.php" class="nav-link" role="menuitem"> 
+                                    <a href="../kolam/kolam-renang.php" class="nav-link" role="menuitem"> 
                                         <i class="nav-icon bi bi-circle"></i>
                                         <p>Tiket Kolam</p>
                                     </a>
@@ -80,7 +80,7 @@ $result = $conn->query($sql);
 
                                 <!-- transaksi kendaraan -->
                                 <li class="nav-item"> 
-                                    <a href="../../transaksi/kendaraan/kendaraan.php" class="nav-link" role="menuitem"> 
+                                    <a href="../kendaraan/kendaraan.php" class="nav-link" role="menuitem"> 
                                         <i class="nav-icon bi bi-circle"></i>
                                         <p>Tiket Kendaraan</p>
                                     </a>
@@ -89,7 +89,7 @@ $result = $conn->query($sql);
 
                                 <!-- transaksi playground -->
                                 <li class="nav-item"> 
-                                    <a href="../../transaksi/playground/playground.php" class="nav-link" role="menuitem"> 
+                                    <a href="../playground/playground.php" class="nav-link" role="menuitem"> 
                                         <i class="nav-icon bi bi-circle"></i>
                                         <p>Tiket PlayGround</p>
                                     </a>
@@ -99,7 +99,7 @@ $result = $conn->query($sql);
 
                                 <!-- transaksi penginapan -->
                                 <li class="nav-item"> 
-                                    <a href="../../transaksi/penginapan/penginapan.php" class="nav-link" role="menuitem"> 
+                                    <a href="../penginapan/penginapan.php" class="nav-link" role="menuitem"> 
                                         <i class="nav-icon bi bi-circle"></i>
                                         <p>Penginapan</p>
                                     </a>
@@ -108,7 +108,7 @@ $result = $conn->query($sql);
 
                                 <!-- transaksi kelengkapan -->
                                 <li class="nav-item"> 
-                                    <a href="../../transaksi/kelengkapan/kelengkapan.php" class="nav-link" role="menuitem"> 
+                                    <a href="../kelengkapan/kelengkapan.php" class="nav-link" role="menuitem"> 
                                         <i class="nav-icon bi bi-circle"></i>
                                         <p>Fasilitas</p>
                                     </a>
@@ -143,7 +143,7 @@ $result = $conn->query($sql);
                                     </a>
                                     <ul class="nav nav-treeview" role="group">
                                         <li class="nav-item">
-                                            <a href="../tiketkolam/tiket-kolam.php" class="nav-link" role="menuitem">
+                                            <a href="../../product/tiketkolam/tiket-kolam.php" class="nav-link" role="menuitem">
                                                 <i class="nav-icon bi bi-dot"></i>
                                                 <p>Tiket Kolam</p>
                                             </a>
@@ -151,7 +151,7 @@ $result = $conn->query($sql);
                                     </ul>
                                     <ul class="nav nav-treeview" role="group">
                                         <li class="nav-item">
-                                            <a href="../kendaraan/kendaraan.php" class="nav-link" role="menuitem">
+                                            <a href="../../product/kendaraan/kendaraan.php" class="nav-link" role="menuitem">
                                                 <i class="nav-icon bi bi-dot"></i>
                                                 <p>Kendaraan</p>
                                             </a>
@@ -159,7 +159,7 @@ $result = $conn->query($sql);
                                     </ul>
                                     <ul class="nav nav-treeview" role="group">
                                         <li class="nav-item">
-                                            <a href="../PlayGround/playground.php" class="nav-link" role="menuitem">
+                                            <a href="../../product/PlayGround/playground.php" class="nav-link" role="menuitem">
                                                 <i class="nav-icon bi bi-dot"></i>
                                                 <p>PlayGround</p>
                                             </a>
@@ -167,7 +167,7 @@ $result = $conn->query($sql);
                                     </ul>
                                     <ul class="nav nav-treeview" role="group">
                                         <li class="nav-item">
-                                            <a href="../Penginapan/penginapan.php" class="nav-link" role="menuitem">
+                                            <a href="../../product/Penginapan/penginapan.php" class="nav-link" role="menuitem">
                                                 <i class="nav-icon bi bi-dot"></i>
                                                 <p>Penginapan</p>
                                             </a>
@@ -175,7 +175,7 @@ $result = $conn->query($sql);
                                     </ul>
                                     <ul class="nav nav-treeview" role="group">
                                         <li class="nav-item">
-                                            <a href="kelengkapan.php" class="nav-link" role="menuitem">
+                                            <a href="../../product/kelengkapan/kelengkapan.php" class="nav-link" role="menuitem">
                                                 <i class="nav-icon bi bi-dot"></i>
                                                 <p>Fasilitas</p>
                                             </a>
@@ -256,11 +256,7 @@ $result = $conn->query($sql);
                     <!--begin::Row-->
                     <div class="row">
                         <div class="col-sm-6">
-                            <h3 class="mb-0">Tabel Kelengkapan</h3>
-                        </div>
-                        <div class="col-sm-6 text-end">
-                            <!-- Button to Add New User -->
-                            <button class="btn btn-custom mb-3" data-bs-toggle="modal" data-bs-target="#addProductModal"><i class="bi bi-plus"></i>Add New Product</button>
+                            <h3 class="mb-0">Tabel Transaksi Kelengkapan</h3>
                         </div>
                     </div> <!--end::Row-->
                 </div> <!--end::Container-->
@@ -278,217 +274,163 @@ $result = $conn->query($sql);
                                     <h3 class="card-title">Product Kelengkapan List</h3>
                                 </div> <!-- /.card-header -->
 
-                                <!-- Tabel Product -->
-                                    <div class="container-fluid">
-                                        <div class="card mt-3 p-3"> <!-- Menambahkan margin-top dan padding -->
-                                            <div class="card-body">
-                                                <div class="table-responsive">
-                                                    <table class="table table-bordered table-hover">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Img</th>
-                                                                <th>Nama Produk</th>
-                                                                <th>Harga WeekDay</th>
-                                                                <th>Harga WeekEnd</th>
-                                                                <th>Kategori</th>
-                                                                <th style="width: 150px">Aksi</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <?php
-                                                            if ($result->num_rows > 0) {
-                                                                // Loop melalui setiap data
-                                                                while ($row = $result->fetch_assoc()) {
-                                                                    ?>
-                                                                    <tr>
-                                                                        <!-- Menampilkan kolom img -->
-                                                                        <td>
-                                                                            <?php if (!empty($row['img'])): ?>
-                                                                                <img src="../../../uploads/<?= htmlspecialchars($row['img']); ?>" alt="Product Image" class="img-thumbnail" style="max-width: 100px; max-height: 100px;">
-                                                                            <?php else: ?>
-                                                                                <span class="text-muted">No Image</span>
-                                                                            <?php endif; ?>
-                                                                        </td>
-                                                                        <!-- Menampilkan kolom lainnya -->
-                                                                        <td><?= htmlspecialchars($row['nama_product']); ?></td>
-                                                                        <td>Rp<?= number_format($row['harga_weekday'], 0, ',', '.'); ?></td>
-                                                                        <td>Rp<?= number_format($row['harga_weekend'], 0, ',', '.'); ?></td>
-                                                                        <td><?= htmlspecialchars($row['kategori_product']); ?></td>
-                                                                        <td>
-                                                                            <div class="d-flex gap-2">
-                                                                            <a href="#" class="btn btn-warning text-light" data-bs-toggle="modal" data-bs-target="#editProductModal" 
-                                                                                data-id="<?= htmlspecialchars($row['id_product']); ?>" 
-                                                                                data-name="<?= htmlspecialchars($row['nama_product']); ?>" 
-                                                                                data-category="<?= htmlspecialchars($row['kategori_product']); ?>" 
-                                                                                data-weekday="<?= htmlspecialchars($row['harga_weekday']); ?>" 
-                                                                                data-weekend="<?= htmlspecialchars($row['harga_weekend']); ?>">Edit</a>
-                                                                                <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteProductModal" onclick="setDeleteProductId(<?= htmlspecialchars($row['id_product']); ?>)">Hapus</a>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <?php
-                                                                }
-                                                            } else {
-                                                                // Jika tidak ada data
-                                                                echo '<tr><td colspan="6" class="text-center">Tidak ada data produk.</td></tr>';
+                                <div class="container-fluid">
+                                    <div class="card mt-3 p-3">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Nama Produk</th>
+                                                            <th>Qty</th>
+                                                            <th>Harga</th>
+                                                            <th>Diskon (%)</th>
+                                                            <th>Harga + Diskon</th>
+                                                            <th>Total Bayar</th>
+                                                            <th>Aksi</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <?php
+                                                        $sql = "SELECT p.*, d.discount_value 
+                                                                FROM products p
+                                                                LEFT JOIN discounts d ON p.id_product = d.id_product
+                                                                WHERE p.kategori_product = 'Kelengkapan'";
+                                                        $result = $conn->query($sql);
+
+                                                        if ($result->num_rows > 0) {
+                                                            while ($row = $result->fetch_assoc()) {
+                                                                $hari = date('l');
+                                                                $harga = ($hari == 'Saturday' || $hari == 'Sunday') ? $row['harga_weekend'] : $row['harga_weekday'];
+                                                                $diskon = isset($row['discount_value']) ? $row['discount_value'] : 0;
+                                                                $harga_diskon = $diskon > 0 ? $harga - ($harga * ($diskon / 100)) : $harga;
+                                                                ?>
+                                                           <tr 
+                                                            data-id-product="<?= $row['id_product']; ?>" 
+                                                            data-id-discount="<?= isset($row['discount_value']) ? $row['discount_value'] : 0; ?>"
+                                                            data-nama-product="<?= htmlspecialchars($row['nama_product']); ?>" 
+                                                            data-username="<?= $_SESSION['username']; ?>"
+                                                            >
+                                                                    <td><?= htmlspecialchars($row['nama_product']); ?></td>
+                                                                    <td>
+                                                                        <input type="number" class="form-control qty-input" value="1" data-harga="<?= $harga; ?>" data-diskon="<?= $diskon; ?>" />
+                                                                    </td>
+                                                                    <td><?= number_format($harga, 2); ?></td>
+                                                                    <td>
+                                                                        <select class="form-select diskon-select">
+                                                                            <option value="0" <?= ($diskon == 0) ? 'selected' : ''; ?>>Tidak ada diskon</option>
+                                                                            <option value="<?= $diskon; ?>" <?= ($diskon > 0) ? 'selected' : ''; ?>><?= $diskon; ?>%</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td class="harga-diskon"><?= number_format($harga_diskon, 2); ?></td>
+                                                                    <td class="total-bayar">0.00</td>
+                                                                    <td>
+                                                                        <button class="btn btn-primary btn-total-bayar" onclick="calculateRowTotal(this)">Total Bayar</button>
+                                                                        
+                                                                        <!-- Tombol Transaksi mengarah ke save_transaksi.php dengan data produk dan qty -->
+                                                                        <button class="btn btn-success btn-transaksi" onclick="prosesTransaksi(this)">Transaksi</button>
+
+
+                                                                        <button class="btn btn-secondary btn-reset" onclick="resetRow(this)">Reset</button>
+                                                                    </td>
+                                                                </tr>
+                                                                <?php
                                                             }
-                                                            ?>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+                                                        } else {
+                                                            echo '<tr><td colspan="7" class="text-center">Tidak ada data produk.</td></tr>';
+                                                        }
+                                                    ?>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
-
+                                </div>
                                     <?php
                                     // Tutup koneksi database
                                     $conn->close();
                                     ?>
-
                             </div> <!-- /.card -->
                         </div> <!-- /.col -->
                     </div> <!--end::Row-->
                 </div> <!--end::Container-->
-            </div> <!--end::App Content-->
-            
-            <!-- Modal Add Product -->
-            <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <!-- Modal Header -->
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="addProductModalLabel">Tambah Product</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <!-- Modal Body -->
-                            <div class="modal-body">
-                                <form id="addProductForm" action="save_product.php" method="POST" enctype="multipart/form-data">
-                                    <div class="mb-3">
-                                        <label for="nama_product" class="form-label">Nama Produk</label>
-                                        <input type="text" name="nama_product" id="nama_product" class="form-control" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="kategori_product" class="form-label">Kategori Produk</label>
-                                        <select class="form-control" name="kategori_product" id="editKategori" required>
-                                        <option value="Kelengkapan">Kelengkapan</option>
-                                    </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="harga_weekday" class="form-label">Harga Weekday</label>
-                                        <input type="number" name="harga_weekday" id="harga_weekday" class="form-control" step="0.01" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="harga_weekend" class="form-label">Harga Weekend</label>
-                                        <input type="number" name="harga_weekend" id="harga_weekend" class="form-control" step="0.01" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="product_image" class="form-label">Gambar Produk</label>
-                                        <input type="file" name="product_image" id="product_image" class="form-control" accept="image/*" required>
-                                    </div>
-                                </form>
-                            </div>
-                            <!-- Modal Footer -->
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                <button type="submit" form="addProductForm" class="btn btn-primary">Simpan Product</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <!-- Modal Add Product -->
-
-            <!-- Edit modal Product  -->
-                <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="editProductModalLabel">Edit Product</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="update_product.php" method="POST" enctype="multipart/form-data">
-                                    <!-- ID Produk -->
-                                    <input type="hidden" name="id_product" id="id_product">
-                                    <div class="mb-3">
-                                        <label for="nama_product" class="form-label">Nama Product</label>
-                                        <input type="text" class="form-control" id="nama_product" name="nama_product" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="kategori_product" class="form-label">Kategori Product</label>
-                                        <select class="form-control" name="kategori_product" id="editKategori" required>
-                                        <option value="Kelengkapan">Kelengkapan</option>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="harga_weekday" class="form-label">Harga Weekday</label>
-                                        <input type="number" class="form-control" id="harga_weekday" name="harga_weekday" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="harga_weekend" class="form-label">Harga Weekend</label>
-                                        <input type="number" class="form-control" id="harga_weekend" name="harga_weekend" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="product_image" class="form-label">Gambar Product</label>
-                                        <input type="file" class="form-control" id="product_image" name="product_image">
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Perbarui</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Edit modal Product  -->
-
-                 <!-- Modal Delete Product -->
-                 <div class="modal fade" id="deleteProductModal" tabindex="-1" aria-labelledby="deleteProductModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="deleteProductModalLabel">Konfirmasi Hapus Produk</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Apakah Anda yakin ingin menghapus produk ini?</p>
-                                    <p><strong>Perhatian:</strong> Tindakan ini tidak dapat dibatalkan.</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <form id="deleteProductForm" action="delete_product.php" method="POST">
-                                        <!-- Input tersembunyi untuk ID produk -->
-                                        <input type="hidden" name="id_product" id="delete_product_id">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                        <button type="submit" class="btn btn-danger">Hapus</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Modal Delete Product --> 
+            </div> <!--end::App Content-->   
         </main>
-        <script>
-            var editModal = document.getElementById('editProductModal');
-            editModal.addEventListener('show.bs.modal', function (event) {
-                var button = event.relatedTarget; // Tombol yang membuka modal
-                var productId = button.getAttribute('data-id'); // Ambil ID dari tombol
-                document.getElementById('id_product').value = productId; // Isi ID produk ke input tersembunyi
-
-                // Ambil data produk untuk menampilkan ke dalam form edit
-                // Lakukan AJAX atau query database untuk mengambil data produk berdasarkan ID (misalnya)
-                fetch(`get_product.php?id=${productId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        document.getElementById('nama_product').value = data.nama_product;
-                        document.getElementById('kategori_product').value = data.kategori_product;
-                        document.getElementById('harga_weekday').value = data.harga_weekday;
-                        document.getElementById('harga_weekend').value = data.harga_weekend;
-                    });
-            });
-        </script>
-        <script>
-            function setDeleteProductId(productId) {
-                // Set ID produk ke input tersembunyi dalam form delete
-                document.getElementById('delete_product_id').value = productId;
-            }
-        </script>
     </div> <!--end::App Wrapper--> <!--begin::Script--> <!--begin::Third Party Plugin(OverlayScrollbars)-->
+    <script>
+        function prosesTransaksi(button) {
+        var tr = button.closest('tr'); // Ambil elemen <tr>
+        var idProduct = tr.getAttribute('data-id-product'); // Ambil ID produk
+        var idDiscount = tr.querySelector('.diskon-select').value; // Ambil nilai diskon
+        var qty = tr.querySelector('.qty-input').value; // Ambil jumlah qty
+        var namaProduct = tr.getAttribute('data-nama-product'); // Ambil nama produk dari atribut data
+        var username = tr.getAttribute('data-username'); // Ambil username dari atribut data
+
+        // Menyusun URL dengan data produk, qty, diskon, nama produk, dan username
+        var url = 'save_transaksi.php?id_product=' + idProduct +
+                '&qty=' + qty +
+                '&diskon=' + idDiscount +
+                '&nama_product=' + encodeURIComponent(namaProduct) +
+                '&username=' + encodeURIComponent(username);
+
+        // Mengarahkan pengguna ke URL tersebut
+        window.location.href = url;
+    }
+        // Fungsi untuk menghitung total bayar
+    function calculateRowTotal(button) {
+        const row = button.closest('tr');
+        const qtyInput = row.querySelector('.qty-input');
+        const diskonSelect = row.querySelector('.diskon-select');
+        const hargaDiskonCell = row.querySelector('.harga-diskon');
+        const totalBayarCell = row.querySelector('.total-bayar');
+
+        const qty = parseInt(qtyInput.value, 10) || 0;
+        const harga = parseFloat(qtyInput.getAttribute('data-harga')) || 0;
+        const diskon = parseFloat(diskonSelect.value) || 0;
+
+        // Menghitung harga setelah diskon
+        const hargaDiskon = diskon > 0 ? harga - (harga * (diskon / 100)) : harga;
+        const totalBayar = hargaDiskon * qty;
+
+        // Memperbarui tampilan harga diskon dan total bayar
+        hargaDiskonCell.innerText = hargaDiskon.toFixed(2);
+        totalBayarCell.innerText = totalBayar.toFixed(2);
+
+        // Mengubah teks tombol menjadi 'Transaksi' dan menonaktifkan tombol
+        button.innerText = 'Transaksi';
+        button.classList.remove('btn-primary');
+        button.classList.add('btn-success');
+        button.disabled = true;
+    }
+
+    // Fungsi untuk mereset baris ke nilai awal
+    function resetRow(button) {
+        const row = button.closest('tr');
+        const qtyInput = row.querySelector('.qty-input');
+        const diskonSelect = row.querySelector('.diskon-select');
+        const hargaDiskonCell = row.querySelector('.harga-diskon');
+        const totalBayarCell = row.querySelector('.total-bayar');
+        const totalBayarButton = row.querySelector('.btn-total-bayar');
+
+        const harga = parseFloat(qtyInput.getAttribute('data-harga')) || 0;
+        const diskon = parseFloat(qtyInput.getAttribute('data-diskon')) || 0;
+        const hargaDiskon = diskon > 0 ? harga - (harga * (diskon / 100)) : harga;
+
+        qtyInput.value = 1;
+        diskonSelect.value = diskon;
+        hargaDiskonCell.innerText = hargaDiskon.toFixed(2);
+        totalBayarCell.innerText = '0.00';
+
+        totalBayarButton.innerText = 'Total Bayar';
+        totalBayarButton.classList.remove('btn-success');
+        totalBayarButton.classList.add('btn-primary');
+        totalBayarButton.disabled = false;
+    }
+    </script>
+    <!-- Link jQuery (Diperlukan untuk modal Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <!-- Link Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/browser/overlayscrollbars.browser.es6.min.js" integrity="sha256-H2VM7BKda+v2Z4+DRy69uknwxjyDRhszjXFhsL4gD3w=" crossorigin="anonymous"></script> <!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Required Plugin(popperjs for Bootstrap 5)-->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha256-whL0tQWoY1Ku1iskqPFvmZ+CHsvmRWx/PIoEvIeWh4I=" crossorigin="anonymous"></script> <!--end::Required Plugin(popperjs for Bootstrap 5)--><!--begin::Required Plugin(Bootstrap 5)-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha256-YMa+wAM6QkVyz999odX7lPRxkoYAan8suedu4k2Zur8=" crossorigin="anonymous"></script> <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->

@@ -1,28 +1,10 @@
-<?php
+<?php 
 session_start();
 // Sertakan file koneksi database dari folder includes
 require '../../includes/db_connect.php';
 
-if (!isset($_SESSION['user_id'])) {
-    header("Location: ../../login.html");
-    exit;
-}
-
-// Cek koneksi
-if ($conn->connect_error) {
-    die("Koneksi gagal: " . $conn->connect_error);
-}
-
-// Query untuk join tabel discounts dan products
-$sql = "SELECT 
-            p.nama_product,
-            p.kategori_product,
-            p.harga_weekday,
-            p.harga_weekend,
-            d.discount_value
-        FROM discounts d
-        JOIN products p ON d.id_product = p.id_product";
-
+// Query untuk mengambil data produk yang kategorinya adalah 'Kolam Renang'
+$sql = "SELECT * FROM discounts LIMIT 1";
 $result = $conn->query($sql);
 ?>
 
@@ -46,6 +28,13 @@ $result = $conn->query($sql);
 </head> <!--end::Head--> <!--begin::Body-->
 
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary"> <!--begin::App Wrapper-->
+    <script>
+         function logout() {
+            // Ganti URL dengan rute logout yang sesuai
+            alert('Apakah anda yakin logout?')
+            window.location.href = '../../login.html'; // Atur URL logout sesuai rute Laravel Anda
+        }
+    </script>
     <!-- Cek session untuk status pesan -->
     <?php if (isset($_SESSION['status'])): ?>
         <script>
@@ -71,252 +60,74 @@ $result = $conn->query($sql);
             </div> <!--end::Container-->
         </nav> <!--end::Header--> <!--begin::Sidebar-->
         <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark"> <!--begin::Sidebar Brand-->
-            <div class="sidebar-brand"> <!--begin::Brand Link--> <a href="./index.html" class="brand-link"> <!--begin::Brand Image-->  <!--end::Brand Image--> <!--begin::Brand Text--> <span class="brand-text fw-light">Wisata Air Panas Walini</span> <!--end::Brand Text--> </a> <!--end::Brand Link--> </div> <!--end::Sidebar Brand--> <!--begin::Sidebar Wrapper-->
+            <div class="sidebar-brand"> <!--begin::Brand Link--> <a href="../index.php" class="brand-link"> <!--begin::Brand Image-->  <!--end::Brand Image--> <!--begin::Brand Text--> <span class="brand-text fw-light">Wisata Air Panas Walini</span> <!--end::Brand Text--> </a> <!--end::Brand Link--> </div> <!--end::Sidebar Brand--> <!--begin::Sidebar Wrapper-->
             <div class="sidebar-wrapper">
                 <nav class="mt-2"> <!--begin::Sidebar Menu-->
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
                         <li class="nav-item"> 
-                            <a href="./index.html" class="nav-link" role="menuitem"> 
+                            <a href="../index.php" class="nav-link" role="menuitem"> 
                                 <i class="nav-icon bi bi-speedometer"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
+
+                        <!-- data Transaksi -->
                         <li class="nav-item"> 
                             <a href="#" class="nav-link" role="menuitem"> 
                                 <i class="nav-icon bi bi-clipboard-fill"></i>
-                                <p>Transaksi ArgoWalini
+                                <p>Transaksi Walini
                                     <span class="nav-badge badge text-bg-secondary me-3"></span> 
                                     <i class="nav-arrow bi bi-chevron-right"></i>
                                 </p>
                             </a>
+
+                            <!-- transaksi kolam -->
                             <ul class="nav nav-treeview" role="group">
                                 <li class="nav-item"> 
-                                    <a href="#" class="nav-link" role="menuitem"> 
+                                    <a href="../transaksi/kolam/kolam-renang.php" class="nav-link" role="menuitem"> 
                                         <i class="nav-icon bi bi-circle"></i>
                                         <p>Tiket Kolam</p>
                                     </a>
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Kolam Renang</p>
-                                            </a>
-                                        </li>
-                                    </ul> 
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Kolam Rendam</p>
-                                            </a>
-                                        </li>
-                                    </ul> 
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Kolam Rendam Keluarga</p>
-                                            </a>
-                                        </li>
-                                    </ul> 
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Terapi Ikan</p>
-                                            </a>
-                                        </li>
-                                    </ul> 
                                 </li>
+                                <!-- transaksi kolam end -->
+
+                                <!-- transaksi kendaraan -->
                                 <li class="nav-item"> 
-                                    <a href="#" class="nav-link" role="menuitem"> 
+                                    <a href="../transaksi/kendaraan/kendaraan.php" class="nav-link" role="menuitem"> 
                                         <i class="nav-icon bi bi-circle"></i>
                                         <p>Tiket Kendaraan</p>
                                     </a>
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Kendaraan roda 2</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Kendaraan roda 4</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Kendaraan roda 6 Bis</p>
-                                            </a>
-                                        </li>
-                                    </ul>
                                 </li>
+                                <!-- transaksi kendaraan end -->
 
-                                <!-- tiket playground -->
+                                <!-- transaksi playground -->
                                 <li class="nav-item"> 
-                                    <a href="#" class="nav-link" role="menuitem"> 
+                                    <a href="../transaksi/playground/playground.php" class="nav-link" role="menuitem"> 
                                         <i class="nav-icon bi bi-circle"></i>
                                         <p>Tiket PlayGround</p>
                                     </a>
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>ATV Adventure</p>
-                                            </a>
-                                        </li>
-                                    </ul> 
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>ATV Tea Tour</p>
-                                            </a>
-                                        </li>
-                                    </ul> 
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>ATV Mini</p>
-                                            </a>
-                                        </li>
-                                    </ul> 
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>F Fox Besar Extream</p>
-                                            </a>
-                                        </li>
-                                    </ul> 
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>F Fox Mini</p>
-                                            </a>
-                                        </li>
-                                    </ul> 
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Go Car</p>
-                                            </a>
-                                        </li>
-                                    </ul> 
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Kereta Api</p>
-                                            </a>
-                                        </li>
-                                    </ul> 
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Bajaj</p>
-                                            </a>
-                                        </li>
-                                    </ul> 
                                 </li>
+                                <!-- transaksi playground end -->
 
-                                <!-- penginapan -->
+
+                                <!-- transaksi penginapan -->
                                 <li class="nav-item"> 
-                                    <a href="#" class="nav-link" role="menuitem"> 
+                                    <a href="../transaksi/penginapan/penginapan.php" class="nav-link" role="menuitem"> 
                                         <i class="nav-icon bi bi-circle"></i>
                                         <p>Penginapan</p>
                                     </a>
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Bungalow</p>
-                                            </a>
-                                        </li>
-                                    </ul> 
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Kerucut</p>
-                                            </a>
-                                        </li>
-                                    </ul> 
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Lumbung</p>
-                                            </a>
-                                        </li>
-                                    </ul> 
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Panggung</p>
-                                            </a>
-                                        </li>
-                                    </ul> 
                                 </li>
+                                <!-- transaksi penginapan end -->
+
+                                <!-- transaksi kelengkapan -->
                                 <li class="nav-item"> 
-                                    <a href="#" class="nav-link" role="menuitem"> 
+                                    <a href="../transaksi/kelengkapan/kelengkapan.php" class="nav-link" role="menuitem"> 
                                         <i class="nav-icon bi bi-circle"></i>
                                         <p>Fasilitas</p>
                                     </a>
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Toilet</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Loker</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Tikar</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Ban</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Kelengkapan Renang</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                            </ul>
-                        </li>
+                            </li>
+                        </ul>
+                        <!-- end data Transaksi -->
 
                         <!-- data -->
                         <li class="nav-item"> 
@@ -328,13 +139,16 @@ $result = $conn->query($sql);
                                 </p>
                             </a>
                             <ul class="nav nav-treeview" role="group">
+                                <!-- user -->
                                 <li class="nav-item"> 
-                                    <a href="" class="nav-link" role="menuitem"> 
+                                    <a href="../user/user.php" class="nav-link" role="menuitem"> 
                                         <i class="nav-icon bi bi-circle"></i>
                                         <p>User</p>
                                     </a>
                                 </li>
+                                <!-- user end -->
 
+                                <!-- product -->
                                 <li class="nav-item"> 
                                     <a href="#" class="nav-link" role="menuitem"> 
                                         <i class="nav-icon bi bi-circle"></i>
@@ -342,7 +156,7 @@ $result = $conn->query($sql);
                                     </a>
                                     <ul class="nav nav-treeview" role="group">
                                         <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
+                                            <a href="../product/tiketkolam/tiket-kolam.php" class="nav-link" role="menuitem">
                                                 <i class="nav-icon bi bi-dot"></i>
                                                 <p>Tiket Kolam</p>
                                             </a>
@@ -350,7 +164,7 @@ $result = $conn->query($sql);
                                     </ul>
                                     <ul class="nav nav-treeview" role="group">
                                         <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
+                                            <a href="../product/kendaraan/kendaraan.php" class="nav-link" role="menuitem">
                                                 <i class="nav-icon bi bi-dot"></i>
                                                 <p>Kendaraan</p>
                                             </a>
@@ -358,7 +172,7 @@ $result = $conn->query($sql);
                                     </ul>
                                     <ul class="nav nav-treeview" role="group">
                                         <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
+                                            <a href="../product/PlayGround/playground.php" class="nav-link" role="menuitem">
                                                 <i class="nav-icon bi bi-dot"></i>
                                                 <p>PlayGround</p>
                                             </a>
@@ -366,7 +180,7 @@ $result = $conn->query($sql);
                                     </ul>
                                     <ul class="nav nav-treeview" role="group">
                                         <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
+                                            <a href="../product/Penginapan/penginapan.php" class="nav-link" role="menuitem">
                                                 <i class="nav-icon bi bi-dot"></i>
                                                 <p>Penginapan</p>
                                             </a>
@@ -374,65 +188,27 @@ $result = $conn->query($sql);
                                     </ul>
                                     <ul class="nav nav-treeview" role="group">
                                         <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
+                                            <a href="../product/kelengkapan/kelengkapan.php" class="nav-link" role="menuitem">
                                                 <i class="nav-icon bi bi-dot"></i>
                                                 <p>Fasilitas</p>
                                             </a>
                                         </li>
                                     </ul>
                                 </li>
+                                <!-- product -->
 
-
+                                <!-- discount -->
                                 <li class="nav-item"> 
-                                    <a href="#" class="nav-link" role="menuitem"> 
+                                    <a href="../discount/discount.php" class="nav-link" role="menuitem"> 
                                         <i class="nav-icon bi bi-circle"></i>
                                         <p>Discount</p>
                                     </a>
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Tiket Kolam</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Kendaraan</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>PlayGround</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Penginapan</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Fasilitas</p>
-                                            </a>
-                                        </li>
-                                    </ul>
                                 </li>
                             </ul>
                         </li>
+                        <!-- data end -->
 
-
+                        <!-- rekap data -->
                         <li class="nav-item"> 
                             <a href="#" class="nav-link" role="menuitem"> 
                                 <i class="nav-icon bi bi-table"></i>
@@ -441,151 +217,80 @@ $result = $conn->query($sql);
                                 </p>
                             </a>
                             <ul class="nav nav-treeview" role="group">
+
+                                <!-- total perhari -->
                                 <li class="nav-item"> 
-                                    <a href="./tables/simple.html" class="nav-link" role="menuitem"> 
+                                    <a href="../rekap/sumary.php" class="nav-link" role="menuitem"> 
                                         <i class="nav-icon bi bi-circle"></i>
                                         <p>Sumary</p>
                                     </a> 
                                 </li>
+                                <!-- total perhari end  -->
+
+                                <!-- rekap data per hari -->
                                 <li class="nav-item"> 
-                                    <a href="#" class="nav-link" role="menuitem"> 
+                                    <a href="../rekap/rekap-perhari/perhari.php" class="nav-link" role="menuitem"> 
                                         <i class="nav-icon bi bi-circle"></i>
                                         <p>Rekap Data Per Hari</p>
                                     </a>
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Rekap Tiket Kolam</p>
-                                            </a>
-                                        </li>
-                                    </ul> 
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Rekap Kendaraan</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Rekap PlayGround</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Rekap Penginapan</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Rekap Fasilitas</p>
-                                            </a>
-                                        </li>
-                                    </ul>
                                 </li>
+                                <!-- rekap data end perhari -->
 
                                 <!-- Rekap Bulanan -->
                                 <li class="nav-item"> 
-                                    <a href="#" class="nav-link" role="menuitem"> 
+                                    <a href="../rekap/rekap-perbulan/perbulan.php" class="nav-link" role="menuitem"> 
                                         <i class="nav-icon bi bi-circle"></i>
                                         <p>Rekap Data Bulanan</p>
                                     </a>
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Rekap Tiket Kolam</p>
-                                            </a>
-                                        </li>
-                                    </ul> 
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Rekap Kendaraan</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Rekap PlayGround</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Rekap Penginapan</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <ul class="nav nav-treeview" role="group">
-                                        <li class="nav-item">
-                                            <a href="./layout/tiket-kolam-anak.html" class="nav-link" role="menuitem">
-                                                <i class="nav-icon bi bi-dot"></i>
-                                                <p>Rekap Fasilitas</p>
-                                            </a>
-                                        </li>
-                                    </ul>
                                 </li>
-
+                                <!-- end rekap bulanan -->
                             </ul>
                         </li>
+                        <!-- rekap data end -->
+
+                        <!-- logout  -->
                         <li class="nav-item"> 
-                            <a href="./docs/introduction.html" class="nav-link" role="menuitem"> 
+                            <a href="#logout" onclick="logout()" class="nav-link" role="menuitem"> 
                                 <i class="nav-icon bi bi-box-arrow-in-left"></i>
                                 <p>Log out</p>
                             </a> 
                         </li>
+                        <!-- logout end -->
                     </ul>
                 </nav>                
             </div> <!--end::Sidebar Wrapper-->
         </aside> <!--end::Sidebar--> <!--begin::App Main-->
 
-        <main class="app-main">
-            <!--begin::App Content Header-->
-            <div class="app-content-header">
-                <!--begin::Container-->
-                <div class="container-fluid">
-                    <!--begin::Row-->
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h3 class="mb-0">Tabel Discount</h3>
-                        </div>
-                        <div class="col-sm-6 text-end">
-                            <!-- Button to Add New User -->
-                            <a href="create_discount.php" class="btn btn-custom mb-3"><i class="bi bi-plus"></i>Add New Discount</a>
-                        </div>
-                    </div> <!--end::Row-->
-                </div> <!--end::Container-->
-            </div> <!--end::App Content Header-->
+        <!-- Tabel Users -->
+            <main class="app-main">
+                <!--begin::App Content Header-->
+                <div class="app-content-header">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h3 class="mb-0">Tabel Discount</h3>
+                            </div>
+                            <div class="col-sm-6 text-end">
+                                <!-- Button to Add New Discount -->
+                                <button class="btn btn-custom mb-3" data-toggle="modal" data-target="#addDiscountModal">
+                                    <i class="bi bi-plus"></i> Add New Discount
+                                </button>
+                            </div>
+                        </div> <!--end::Row-->
+                    </div> <!--end::Container-->
+                </div> <!--end::App Content Header-->
 
-            <!--begin::App Content-->
-            <div class="app-content">
-                <!--begin::Container-->
-                <div class="container-fluid">
-                    <!--begin::Row-->
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card mb-4">
-                                <div class="card-header">
-                                    <h3 class="card-title">Discount List</h3>
-                                </div> <!-- /.card-header -->
+                <!--begin::App Content-->
+                <div class="app-content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Discount List</h3>
+                                    </div> <!-- /.card-header -->
 
-                                <!-- Tabel Users -->
+                                    <!-- Tabel Discount -->
                                     <div class="container-fluid">
                                         <div class="card">
                                             <div class="card-body">
@@ -593,34 +298,30 @@ $result = $conn->query($sql);
                                                     <table class="table table-bordered">
                                                         <thead>
                                                             <tr>
-                                                                <th>Nama Produk</th>
-                                                                <th>Kategori Produk</th>
-                                                                <th>Harga WeekDay</th>
-                                                                <th>Harga WeekEnd</th>
-                                                                <th>Diskon (%)</th>
-                                                                <th>Harga WeekDay + Diskon</th>
-                                                                <th>Harga WeekEnd + Diskon</th>
+                                                                <th style="width: 900px;">Diskon (%)</th>
+                                                                <th>Aksi</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             <?php
+                                                            // Pastikan Anda sudah mendapatkan data dari database
                                                             if ($result->num_rows > 0) {
-                                                                // Loop data ke dalam tabel
                                                                 while ($row = $result->fetch_assoc()) {
-                                                                    $harga_weekday_diskon = $row['harga_weekday'] * (1 - $row['discount_value'] / 100);
-                                                                    $harga_weekend_diskon = $row['harga_weekend'] * (1 - $row['discount_value'] / 100);
-                                                                    echo "<tr>";
-                                                                    echo "<td>" . htmlspecialchars($row['nama_product']) . "</td>";
-                                                                    echo "<td>" . htmlspecialchars($row['kategori_product']) . "</td>";
-                                                                    echo "<td>" . number_format($row['harga_weekday'], 2) . "</td>";
-                                                                    echo "<td>" . number_format($row['harga_weekend'], 2) . "</td>";
-                                                                    echo "<td>" . number_format($row['discount_value'], 2) . "%</td>"; // Menampilkan persentase diskon
-                                                                    echo "<td>" . number_format($harga_weekday_diskon, 2) . "</td>";
-                                                                    echo "<td>" . number_format($harga_weekend_diskon, 2) . "</td>";
-                                                                    echo "</tr>";
+                                                                    $id_discount = $row['id_discount']; // ID untuk penghapusan
+                                                            ?>
+                                                                    <tr>
+                                                                        <td><?= htmlspecialchars($row['discount_value']); ?></td>
+                                                                        <td>
+                                                                            <!-- Button to Delete All Discounts -->
+                                                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAllModal">
+                                                                                Hapus Diskon
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                            <?php
                                                                 }
                                                             } else {
-                                                                echo "<tr><td colspan='7' class='text-center'>Tidak ada data discount</td></tr>";
+                                                                echo "<tr><td colspan='2' class='text-center'>Tidak ada data discount</td></tr>";
                                                             }
                                                             ?>
                                                         </tbody>
@@ -630,18 +331,67 @@ $result = $conn->query($sql);
                                         </div>
                                     </div>
                                     <!-- end tabel -->
-                                    <?php
-                                    // Tutup koneksi
-                                    $conn->close();
-                                    ?>
-                            </div> <!-- /.card -->
-                        </div> <!-- /.col -->
-                    </div> <!--end::Row-->
-                </div> <!--end::Container-->
-            </div> <!--end::App Content-->
-        </main>
+                                </div> <!-- /.card -->
+                            </div> <!-- /.col -->
+                        </div> <!--end::Row-->
+                    </div> <!--end::Container-->
+                </div> <!--end::App Content-->
+            </main>
+
+            <!-- Modal Konfirmasi Hapus Semua -->
+            <div class="modal fade" id="deleteAllModal" tabindex="-1" role="dialog" aria-labelledby="deleteAllModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                     <div class="modal-content">
+                        <div class="modal-header">                                                            
+                             <h5 class="modal-title" id="deleteAllModalLabel">Konfirmasi Hapus Diskon</h5>                                                           
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>                                                        
+                                </button>                                                                                                                
+                                </div>                                                    
+                                <div class="modal-body">                                                    
+                                    Apakah Anda yakin ingin menghapus diskon?                                                    
+                                </div>                                                    
+                                <div class="modal-footer">                                                    
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                     <!-- Tombol untuk menghapus semua diskon -->                                                   
+                                 <a href="delete_discount.php" class="btn btn-danger">Hapus</a>                                                                                                               
+                                 </div>
+                            </div>                                                                                                   
+                        </div>                                                    
+                    </div>                                                                                                                                                                             
+            <!-- Modal Add New Discount -->
+            <div class="modal fade" id="addDiscountModal" tabindex="-1" role="dialog" aria-labelledby="addDiscountModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addDiscountModalLabel">Tambah Diskon Baru</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                        <form method="POST" action="add_discount.php">
+                            <div class="form-group gap-2">
+                                <label for="discount_value">Masukkan Diskon (%)</label>
+                                <input type="number" class="form-control" id="discount_value" name="discount_value" placeholder="Contoh : 10.00 ini sama dengan 10%" min="0" required>
+                            </div>
+                            <br>
+                            <button type="submit" class="btn btn-primary">Tambah Diskon ke Semua Produk</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- end modal -->
     </div> <!--end::App Wrapper--> <!--begin::Script--> <!--begin::Third Party Plugin(OverlayScrollbars)-->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script> -->
+    <!-- Link Bootstrap CSS -->
+    <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> -->
+
+    <!-- Link jQuery (Diperlukan untuk modal Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+    <!-- Link Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/browser/overlayscrollbars.browser.es6.min.js" integrity="sha256-H2VM7BKda+v2Z4+DRy69uknwxjyDRhszjXFhsL4gD3w=" crossorigin="anonymous"></script> <!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Required Plugin(popperjs for Bootstrap 5)-->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha256-whL0tQWoY1Ku1iskqPFvmZ+CHsvmRWx/PIoEvIeWh4I=" crossorigin="anonymous"></script> <!--end::Required Plugin(popperjs for Bootstrap 5)--><!--begin::Required Plugin(Bootstrap 5)-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha256-YMa+wAM6QkVyz999odX7lPRxkoYAan8suedu4k2Zur8=" crossorigin="anonymous"></script> <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
