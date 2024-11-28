@@ -1,3 +1,46 @@
+<?php
+session_start();
+include '../../includes/db_connect.php';
+
+// Periksa koneksi
+if ($conn->connect_error) {
+    die("Koneksi gagal: " . $conn->connect_error);
+}
+
+// Inisialisasi variabel
+$total_visitor_all = 0;
+$total_pendapatan_all = 0;
+$tanggal_dipilih = '';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['tanggal'])) {
+    $tanggal_dipilih = $_POST['tanggal'];
+
+    $query = "
+        SELECT 
+            COUNT(t.id_transaksi) AS total_visitor,
+            SUM(t.total_harga_tambah_diskon) AS total_pendapatan
+        FROM 
+            transactions t
+        WHERE 
+            DATE(t.tanggal_transaksi) = ?
+    ";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("s", $tanggal_dipilih);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $total_visitor_all = $row['total_visitor'];
+        $total_pendapatan_all = $row['total_pendapatan'];
+    } else {
+        echo "Tidak ada data pada tanggal $tanggal_dipilih";
+    }
+
+    $stmt->close();
+}
+$conn->close();
+?>
 <!DOCTYPE html>
 <html lang="en"> <!--begin::Head-->
 <head>
@@ -236,7 +279,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-6">
-                            <h3 class="mb-0">Rekap Sumary</h3>
+                            <h3 class="mb-0">Rekap Summary</h3>
                         </div>
                     </div>
                 </div>
@@ -248,15 +291,30 @@
                         <div class="col-md-12">
                             <div class="card mb-4">
                                 <div class="card-header">
-                                    <h3 class="card-title">Sumary</h3>
-                                    <form id="filterForm" class="mt-3">
-                                        <input type="date" id="tanggalInput" class="form-control" required />
-                                        <button type="submit" class="btn btn-primary mt-3">Tampilkan Sumary</button>
+                                    <h3 class="card-title">Summary</h3>
+                                    <!-- Form Input Tanggal -->
+                                    <form id="filterForm" class="mt-3" method="POST" action="">
+                                        <input type="date" id="tanggalInput" name="tanggal" class="form-control" required value="<?php echo htmlspecialchars($tanggal_dipilih); ?>" />
+                                        <button type="submit" class="btn btn-primary mt-3">Tampilkan Summary</button>
                                     </form>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <?php if (!empty($tanggal_dipilih)) : ?>
+                        <div class="row mt-3">
+                            <div class="col-lg-6 col-12">
+                                <div class="small-box text-bg-primary text-light">
+                                    <div class="inner">
+                                        <h4>Total Visitor pada <?php echo htmlspecialchars($tanggal_dipilih); ?></h4>
+                                        <p>Visitor: <?php echo $total_visitor_all ?: 0; ?></p>
+                                        <p>Total Pendapatan: Rp <?php echo number_format($total_pendapatan_all ?: 0, 0, ',', '.'); ?></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </main>
@@ -265,125 +323,5 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha256-whL0tQWoY1Ku1iskqPFvmZ+CHsvmRWx/PIoEvIeWh4I=" crossorigin="anonymous"></script> <!--end::Required Plugin(popperjs for Bootstrap 5)--><!--begin::Required Plugin(Bootstrap 5)-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha256-YMa+wAM6QkVyz999odX7lPRxkoYAan8suedu4k2Zur8=" crossorigin="anonymous"></script> <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
     <script src="../../assets/js/adminlte.js"></script> <!--end::Required Plugin(AdminLTE)--><!--begin::OverlayScrollbars Configure-->
-    <script>
-        document.getElementById('filterForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-    const tanggal = document.getElementById('tanggalInput').value;
-    loadPage(tanggal, 1); // Muat halaman pertama
-});
-
-// Fungsi untuk memuat data ke halaman
-function loadPage(tanggal, page) {
-    fetch(`backend.php?tanggal=${tanggal}&page=${page}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                document.getElementById('dataContainer').innerHTML = `<p class="text-danger">${data.error}</p>`;
-                return;
-            }
-
-            const { data: rows, total, limit, current_page } = data;
-
-            // Buat tabel
-            let html = `
-                <table class="table table-bordered" id="dataTable">
-                    <thead>
-                        <tr>
-                            <th>ID Transaksi</th>
-                            <th>Nama Produk</th>
-                            <th>User</th>
-                            <th>Tanggal Transaksi</th>
-                            <th>ID Diskon</th>
-                            <th>Qty</th>
-                            <th>Harga Produk</th>
-                            <th>Total Harga</th>
-                            <th>Diskon</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-            rows.forEach((row) => {
-                const idDiscount = row.id_discount ? row.id_discount : 'Tidak Ada Diskon';
-
-                html += `
-                    <tr>
-                        <td>${row.id_transaksi}</td>
-                        <td>${row.nama_product}</td>
-                        <td>${row.username}</td>
-                        <td>${row.tanggal_transaksi}</td>
-                        <td>${idDiscount}</td>
-                        <td>${row.qty}</td>
-                        <td>${row.harga_product}</td>
-                        <td>${row.total_harga_tambah_diskon}</td>
-                        <td>${row.diskon}</td>
-                    </tr>
-                `;
-            });
-            html += `</tbody></table>`;
-            document.getElementById('dataContainer').innerHTML = html;
-
-            // Pagination
-            const totalPages = Math.ceil(total / limit);
-            let paginationHtml = '';
-            for (let i = 1; i <= totalPages; i++) {
-                paginationHtml += `
-                    <li class="page-item ${i === current_page ? 'active' : ''}">
-                        <a class="page-link" href="javascript:void(0)" onclick="loadPage('${tanggal}', ${i})">${i}</a>
-                    </li>
-                `;
-            }
-            document.getElementById('paginationContainer').innerHTML = paginationHtml;
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-}
-
-// Fungsi untuk mencetak tabel
-document.getElementById('printBtn').addEventListener('click', function () {
-    const printContent = document.getElementById('dataTable').outerHTML;
-    const newWindow = window.open();
-    newWindow.document.write('<html><head><title>Print</title></head><body>');
-    newWindow.document.write(printContent);
-    newWindow.document.write('</body></html>');
-    newWindow.document.close();
-    newWindow.print();
-});
-
-// Fungsi untuk ekspor tabel ke Excel
-document.getElementById('excelBtn').addEventListener('click', function () {
-    const table = document.getElementById('dataTable');
-    let excelContent = "<table border='1'>";
-    
-    // Menambahkan header
-    const headers = table.querySelectorAll('thead th');
-    excelContent += "<tr>";
-    headers.forEach(header => {
-        excelContent += `<th>${header.innerText}</th>`;
-    });
-    excelContent += "</tr>";
-
-    // Menambahkan baris data
-    const rows = table.querySelectorAll('tbody tr');
-    rows.forEach(row => {
-        excelContent += "<tr>";
-        const cells = row.querySelectorAll('td');
-        cells.forEach(cell => {
-            excelContent += `<td>${cell.innerText}</td>`;
-        });
-        excelContent += "</tr>";
-    });
-
-    excelContent += "</table>";
-
-    // Membuat file Excel
-    const blob = new Blob([excelContent], { type: 'application/vnd.ms-excel' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `rekap_data_${new Date().toLocaleDateString()}.xls`;
-    a.click();
-});
-</script>
 </body><!--end::Body-->
 </html>
